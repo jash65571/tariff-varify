@@ -1,71 +1,44 @@
-import { Sparkles, Globe, GitBranch, Map, FileText, Bell } from "lucide-react";
-
 const features = [
   {
-    icon: Sparkles,
-    title: "AI-Powered HS Classification",
-    description:
-      "AI reads your product descriptions and assigns 6-digit HS codes with confidence scores. Handles ambiguous items that trip up even experienced brokers.",
+    problem: "Stop Googling HS codes at 11pm",
+    solution:
+      "Your part descriptions go in. Tariff classification codes come out — with confidence scores, so you know which ones to double-check with your broker. Handles thousands of line items in seconds.",
   },
   {
-    icon: Globe,
-    title: "Real-Time Tariff Rates",
-    description:
-      "Current duty rates for every major trade lane — US-China, US-EU, USMCA, and more. Rates update as trade policy changes, so your numbers are always fresh.",
+    problem: "Your spreadsheet breaks every time rates change",
+    solution:
+      "Tariff rates update automatically. When Section 301 rates shift or new duties get announced, your exposure numbers update the same day. Not next quarter when someone remembers to check.",
   },
   {
-    icon: GitBranch,
-    title: "What-If Scenarios",
-    description:
-      "Move a component from China to Vietnam and instantly see the impact. Compare multiple sourcing strategies side-by-side before making commitments.",
+    problem: "\"What if we move this to Vietnam?\"",
+    solution:
+      "Model sourcing changes before you commit. Swap a supplier country and instantly see the tariff impact. Compare scenarios side by side. Make the decision with actual numbers.",
   },
   {
-    icon: Map,
-    title: "Country Risk Heatmap",
-    description:
-      "Visualize tariff exposure geographically. Spot concentration risk in high-tariff countries and identify diversification opportunities at a glance.",
-  },
-  {
-    icon: FileText,
-    title: "PDF Export",
-    description:
-      "Generate boardroom-ready reports with charts, summaries, and recommendations. Share with stakeholders who don't need dashboard access.",
-  },
-  {
-    icon: Bell,
-    title: "Tariff Alerts",
-    description:
-      "Get notified when rates change for your HS codes. Stay ahead of policy shifts instead of discovering them on your next invoice.",
+    problem: "The board wants a tariff number by Friday",
+    solution:
+      "One-click PDF export with exposure summaries, country breakdowns, and risk flags. Looks like you spent a week on it. Takes about 30 seconds.",
   },
 ];
 
 export function Features() {
   return (
-    <section id="features" className="border-t border-gray-200 py-16 dark:border-gray-800 sm:py-24">
+    <section
+      id="features"
+      className="border-t border-gray-200 py-20 dark:border-gray-800 lg:py-28"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="text-sm font-medium text-emerald-500">Features</p>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
-            Everything you need to manage tariff risk
-          </h2>
-          <p className="mt-4 text-sm leading-relaxed text-gray-500 dark:text-gray-400">
-            Built for operations teams, procurement leads, and CFOs who need clarity
-            on how trade policy affects their cost structure.
-          </p>
-        </div>
-
-        <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {features.map((feature) => (
+        <div className="divide-y divide-gray-200 dark:divide-gray-800">
+          {features.map((f) => (
             <div
-              key={feature.title}
-              className="rounded-xl border border-gray-200 p-6 transition-all duration-150 hover:border-gray-300 dark:border-gray-800 dark:hover:border-gray-700"
+              key={f.problem}
+              className="grid grid-cols-1 gap-2 py-10 first:pt-0 last:pb-0 sm:grid-cols-2 sm:gap-16 sm:py-12"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800">
-                <feature.icon size={20} className="text-gray-600 dark:text-gray-300" strokeWidth={1.5} />
-              </div>
-              <h3 className="mt-4 text-sm font-semibold">{feature.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-gray-500 dark:text-gray-400">
-                {feature.description}
+              <h3 className="text-xl font-semibold tracking-tight sm:text-2xl">
+                {f.problem}
+              </h3>
+              <p className="text-sm leading-relaxed text-gray-500 dark:text-gray-400">
+                {f.solution}
               </p>
             </div>
           ))}

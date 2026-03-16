@@ -1,5 +1,5 @@
 import { Hero } from "@/components/marketing/hero";
-import { SocialProof } from "@/components/marketing/social-proof";
+import { PainPoints } from "@/components/marketing/pain-points";
 import { HowItWorks } from "@/components/marketing/how-it-works";
 import { Features } from "@/components/marketing/features";
 import { Pricing } from "@/components/marketing/pricing";
@@ -10,7 +10,7 @@ export default function LandingPage() {
   return (
     <>
       <Hero />
-      <SocialProof />
+      <PainPoints />
       <HowItWorks />
       <Features />
       <Pricing />

@@ -7,34 +7,24 @@ import { cn } from "@/lib/utils";
 
 const faqs = [
   {
-    question: "What file format does the upload support?",
-    answer:
-      "We accept CSV files. Your spreadsheet should include columns for item name or description, supplier country, and annual spend. During upload, you'll map your columns to ours — so your headers don't need to match exactly.",
+    q: "What format does the file need to be?",
+    a: "CSV. Columns for part name, country, and cost. During upload you map your columns to ours — takes about 30 seconds.",
   },
   {
-    question: "How does the AI classification work?",
-    answer:
-      "We send your product descriptions to OpenAI's GPT models, which analyze each item and return the most likely 6-digit HS code along with a confidence score. Items with low confidence are flagged for your review.",
+    q: "How accurate is the HS code classification?",
+    a: "Good enough to save you hours. Not perfect enough to replace your broker on a final filing. Think of it as a first pass that gets you 85\u201390% of the way there.",
   },
   {
-    question: "Are the tariff rates accurate and up to date?",
-    answer:
-      "Yes. We maintain current duty rates for major trade relationships including US-China (Section 301), US-EU, USMCA, and standard MFN rates. Rates are updated as trade policy changes, and Pro users get alerts when rates shift for their HS codes.",
+    q: "Are the tariff rates current?",
+    a: "Yes. We track Section 301, MFN, USMCA, and more. Pro users get alerts when rates change for their codes.",
   },
   {
-    question: "Can I model different sourcing strategies?",
-    answer:
-      "Absolutely. With a Pro or Enterprise plan, you can create what-if scenarios — like moving a component from China to Vietnam — and instantly see how the change affects your total tariff exposure and landed cost.",
+    q: "Can I cancel anytime?",
+    a: "Yes. Month-to-month. Cancel from settings. No phone call required.",
   },
   {
-    question: "Is my data secure?",
-    answer:
-      "All data is encrypted in transit and at rest. We use Supabase with Row Level Security, which means your BOM data is completely isolated from other users. We never share or sell your data.",
-  },
-  {
-    question: "Can I cancel or change plans anytime?",
-    answer:
-      "Yes. All plans are month-to-month with no long-term commitment. You can upgrade, downgrade, or cancel from your account settings at any time. If you cancel, you keep access through the end of your billing period.",
+    q: "Is my data secure?",
+    a: "Encrypted in transit and at rest. Row-level security means nobody sees your BOM data but you. We don\u2019t sell data. Ever.",
   },
 ];
 
@@ -42,34 +32,29 @@ export function Faq() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section id="faq" className="border-t border-gray-200 py-16 dark:border-gray-800 sm:py-24">
+    <section id="faq" className="border-t border-gray-200 py-20 dark:border-gray-800 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="text-sm font-medium text-emerald-500">FAQ</p>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
-            Common questions
-          </h2>
-        </div>
+        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">FAQ</h2>
 
-        <div className="mx-auto mt-16 max-w-2xl divide-y divide-gray-200 dark:divide-gray-800">
-          {faqs.map((faq, index) => (
-            <div key={index} className="py-5">
+        <div className="mt-12 max-w-2xl divide-y divide-gray-200 dark:divide-gray-800">
+          {faqs.map((faq, i) => (
+            <div key={i} className="py-5">
               <button
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                onClick={() => setOpenIndex(openIndex === i ? null : i)}
                 className="flex w-full items-start justify-between gap-4 text-left"
               >
-                <span className="text-sm font-medium">{faq.question}</span>
+                <span className="text-sm font-medium">{faq.q}</span>
                 <ChevronDown
                   size={16}
                   strokeWidth={1.5}
                   className={cn(
                     "mt-0.5 shrink-0 text-gray-400 transition-transform duration-200",
-                    openIndex === index && "rotate-180"
+                    openIndex === i && "rotate-180"
                   )}
                 />
               </button>
               <AnimatePresence initial={false}>
-                {openIndex === index && (
+                {openIndex === i && (
                   <motion.div
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
@@ -78,7 +63,7 @@ export function Faq() {
                     className="overflow-hidden"
                   >
                     <p className="pt-3 text-sm leading-relaxed text-gray-500 dark:text-gray-400">
-                      {faq.answer}
+                      {faq.a}
                     </p>
                   </motion.div>
                 )}
