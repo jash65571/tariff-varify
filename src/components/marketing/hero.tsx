@@ -31,12 +31,12 @@ export function Hero() {
               Upload your BOM — it&apos;s free
               <ArrowRight size={16} />
             </Link>
-            <a
-              href="#pricing"
+            <Link
+              href="/pricing"
               className="inline-flex w-full items-center justify-center rounded-lg border border-gray-200 px-5 py-2.5 text-sm font-medium transition-all duration-150 hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-900 sm:w-auto"
             >
               See pricing
-            </a>
+            </Link>
           </div>
         </div>
 

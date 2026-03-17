@@ -4,11 +4,12 @@ import { useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { Logo } from "@/components/ui/logo";
 
 const links = [
-  { label: "Features", href: "#features" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Features", href: "/features" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "FAQ", href: "/faq" },
 ];
 
 export function Navbar() {
@@ -17,15 +18,13 @@ export function Navbar() {
   return (
     <header className="fixed top-0 z-50 w-full border-b border-gray-200 bg-white/80 backdrop-blur-lg dark:border-gray-800 dark:bg-gray-950/80">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-        <Link href="/" className="text-base font-semibold tracking-tight">
-          TariffVerify
-        </Link>
+        <Logo size={24} />
 
         <div className="hidden items-center gap-8 md:flex">
           {links.map((l) => (
-            <a key={l.href} href={l.href} className="text-sm text-gray-500 transition-colors duration-150 hover:text-gray-950 dark:text-gray-400 dark:hover:text-gray-50">
+            <Link key={l.href} href={l.href} className="text-sm text-gray-500 transition-colors duration-150 hover:text-gray-950 dark:text-gray-400 dark:hover:text-gray-50">
               {l.label}
-            </a>
+            </Link>
           ))}
         </div>
 
@@ -53,7 +52,7 @@ export function Navbar() {
           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.15 }} className="overflow-hidden md:hidden">
             <div className="border-t border-gray-200 bg-white px-4 py-3 dark:border-gray-800 dark:bg-gray-950">
               {links.map((l) => (
-                <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="block py-2.5 text-sm text-gray-600 dark:text-gray-400">{l.label}</a>
+                <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className="block py-2.5 text-sm text-gray-600 dark:text-gray-400">{l.label}</Link>
               ))}
               <Link href="/login" className="block py-2.5 text-sm text-gray-600 dark:text-gray-400">Log in</Link>
             </div>

@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://tariffverify.com"),
   title: "TariffVerify — Instant Tariff Exposure Analysis",
   description:
     "Upload your Bill of Materials, get AI-powered HS code classification, and visualize your tariff exposure across countries. Built for manufacturers and importers.",
@@ -24,12 +25,23 @@ export const metadata: Metadata = {
     "trade compliance",
     "tariff exposure",
   ],
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "32x32" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
   openGraph: {
     title: "TariffVerify — Instant Tariff Exposure Analysis",
     description:
       "Upload your Bill of Materials, get AI-powered HS code classification, and visualize your tariff exposure across countries.",
     siteName: "TariffVerify",
     type: "website",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/og-image.png"],
   },
 };
 
