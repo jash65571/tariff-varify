@@ -2,14 +2,16 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createClient } from "@supabase/supabase-js";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2026-02-25.clover",
-});
+function getStripe() {
+  return new Stripe(process.env.STRIPE_SECRET_KEY!);
+}
 
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+function getSupabaseAdmin() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+}
 
 function planFromPrice(priceId: string): string {
   if (priceId === process.env.STRIPE_PRICE_PRO) return "pro";
@@ -17,16 +19,18 @@ function planFromPrice(priceId: string): string {
   return "free";
 }
 
-async function findUserBySubscription(subscriptionId: string) {
-  const { data } = await supabaseAdmin
-    .from("profiles")
-    .select("id")
-    .eq("stripe_subscription_id", subscriptionId)
-    .single();
-  return data?.id as string | undefined;
-}
-
 export async function POST(request: Request) {
+  const stripe = getStripe();
+  const supabaseAdmin = getSupabaseAdmin();
+
+  async function findUserBySubscription(subscriptionId: string) {
+    const { data } = await supabaseAdmin
+      .from("profiles")
+      .select("id")
+      .eq("stripe_subscription_id", subscriptionId)
+      .single();
+    return data?.id as string | undefined;
+  }
   const body = await request.text();
   const signature = request.headers.get("stripe-signature");
 
