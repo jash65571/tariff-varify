@@ -1,5 +1,9 @@
 "use client";
 
+import { useState } from "react";
+import { Trash2 } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
+
 type SavedScenario = {
   id: string;
   name: string;
@@ -12,13 +16,25 @@ type SavedScenario = {
 type Props = {
   scenarios: SavedScenario[];
   onLoad: (scenario: SavedScenario) => void;
+  onDelete?: (id: string) => void;
 };
 
 function fmt(n: number) {
   return `$${n.toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
 }
 
-export function SavedScenariosList({ scenarios, onLoad }: Props) {
+export function SavedScenariosList({ scenarios, onLoad, onDelete }: Props) {
+  const [deleting, setDeleting] = useState<string | null>(null);
+
+  async function handleDelete(id: string) {
+    if (!window.confirm("Delete this scenario?")) return;
+    setDeleting(id);
+    const supabase = createClient();
+    await supabase.from("scenarios").delete().eq("id", id);
+    onDelete?.(id);
+    setDeleting(null);
+  }
+
   return (
     <div>
       <p className="mb-4 text-sm font-medium">Saved scenarios</p>
@@ -45,6 +61,14 @@ export function SavedScenariosList({ scenarios, onLoad }: Props) {
                 className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium transition-all hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-900"
               >
                 Load
+              </button>
+              <button
+                onClick={() => handleDelete(s.id)}
+                disabled={deleting === s.id}
+                className="rounded p-1 text-gray-400 transition-colors hover:text-red-500 disabled:opacity-50 dark:text-gray-500 dark:hover:text-red-400"
+                title="Delete scenario"
+              >
+                <Trash2 size={14} />
               </button>
             </div>
           </div>

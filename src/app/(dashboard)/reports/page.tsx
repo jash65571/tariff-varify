@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FileText } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { cn } from "@/lib/utils";
+import { DeleteUploadButton } from "@/components/dashboard/delete-upload-button";
 
 export const metadata: Metadata = { title: "Reports — TariffVerify" };
 
@@ -74,19 +75,22 @@ export default async function ReportsPage() {
                   {u.total_items} items — {new Date(u.created_at).toLocaleDateString()}
                 </p>
               </div>
-              <div className="flex gap-6 text-xs sm:text-right">
-                <div>
-                  <p className="text-gray-400">Spend</p>
-                  <p className="font-mono font-medium">${Number(u.total_spend).toLocaleString("en-US", { maximumFractionDigits: 0 })}</p>
+              <div className="flex items-center gap-4 text-xs sm:text-right">
+                <div className="flex gap-6">
+                  <div>
+                    <p className="text-gray-400">Spend</p>
+                    <p className="font-mono font-medium">${Number(u.total_spend).toLocaleString("en-US", { maximumFractionDigits: 0 })}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-400">Exposure</p>
+                    <p className="font-mono font-medium text-red-600 dark:text-red-400">${Number(u.total_tariff_exposure).toLocaleString("en-US", { maximumFractionDigits: 0 })}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-400">Rate</p>
+                    <p className="font-mono font-medium">{rate.toFixed(1)}%</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-gray-400">Exposure</p>
-                  <p className="font-mono font-medium text-red-600 dark:text-red-400">${Number(u.total_tariff_exposure).toLocaleString("en-US", { maximumFractionDigits: 0 })}</p>
-                </div>
-                <div>
-                  <p className="text-gray-400">Rate</p>
-                  <p className="font-mono font-medium">{rate.toFixed(1)}%</p>
-                </div>
+                <DeleteUploadButton uploadId={u.id} />
               </div>
             </Link>
           );

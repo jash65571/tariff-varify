@@ -7,6 +7,7 @@ import { CountryDonut } from "@/components/charts/country-donut";
 import { TopItemsBar } from "@/components/charts/top-items-bar";
 import { TariffAlerts } from "@/components/dashboard/tariff-alerts";
 import { RateFeed } from "@/components/dashboard/rate-feed";
+import { DeleteUploadButton } from "@/components/dashboard/delete-upload-button";
 
 export const metadata: Metadata = { title: "Dashboard — TariffVerify" };
 
@@ -127,13 +128,18 @@ export default async function DashboardPage() {
           <h2 className="mb-4 text-sm font-medium">Recent uploads</h2>
           <div className="divide-y divide-gray-200 rounded-lg border border-gray-200 dark:divide-gray-800 dark:border-gray-800">
             {uploads.map((u) => (
-              <Link key={u.id} href={`/reports/${u.id}`} className="flex items-center justify-between px-4 py-3 transition-colors hover:bg-gray-50 dark:hover:bg-gray-900">
-                <div>
-                  <p className="text-sm font-medium">{u.filename}</p>
-                  <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">{u.total_items} items — {new Date(u.created_at).toLocaleDateString()}</p>
+              <div key={u.id} className="flex items-center justify-between px-4 py-3 transition-colors hover:bg-gray-50 dark:hover:bg-gray-900">
+                <Link href={`/reports/${u.id}`} className="flex flex-1 items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium">{u.filename}</p>
+                    <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">{u.total_items} items — {new Date(u.created_at).toLocaleDateString()}</p>
+                  </div>
+                  <p className="font-mono text-sm font-medium text-red-600 dark:text-red-400">${Number(u.total_tariff_exposure).toLocaleString("en-US", { maximumFractionDigits: 0 })}</p>
+                </Link>
+                <div className="ml-3">
+                  <DeleteUploadButton uploadId={u.id} />
                 </div>
-                <p className="font-mono text-sm font-medium text-red-600 dark:text-red-400">${Number(u.total_tariff_exposure).toLocaleString("en-US", { maximumFractionDigits: 0 })}</p>
-              </Link>
+              </div>
             ))}
           </div>
         </div>

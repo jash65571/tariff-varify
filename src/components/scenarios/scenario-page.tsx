@@ -9,39 +9,23 @@ import { SavedScenariosList } from "./saved-scenarios-list";
 import { SaveScenarioForm } from "./save-scenario-form";
 
 type BomUpload = {
-  id: string;
-  filename: string;
-  total_spend: number;
-  total_tariff_exposure: number;
-  effective_tariff_rate: number;
-  total_items: number;
-  created_at: string;
+  id: string; filename: string; total_spend: number;
+  total_tariff_exposure: number; effective_tariff_rate: number;
+  total_items: number; created_at: string;
 };
 
 type BomItem = {
-  id: string;
-  item_name: string;
-  supplier_country: string;
-  annual_spend: number;
-  tariff_rate: number;
-  tariff_cost: number;
-  risk_level: string;
+  id: string; item_name: string; supplier_country: string;
+  annual_spend: number; tariff_rate: number; tariff_cost: number; risk_level: string;
 };
 
 type SavedScenario = {
-  id: string;
-  name: string;
-  upload_id: string;
+  id: string; name: string; upload_id: string;
   changes: Record<string, { from: string; to: string }>;
-  total_savings: number;
-  created_at: string;
+  total_savings: number; created_at: string;
 };
 
-type Props = {
-  uploads: BomUpload[];
-  savedScenarios: SavedScenario[];
-  userId: string;
-};
+type Props = { uploads: BomUpload[]; savedScenarios: SavedScenario[]; userId: string };
 
 export function ScenarioPage({ uploads, savedScenarios: initial, userId }: Props) {
   const [selectedUploadId, setSelectedUploadId] = useState("");
@@ -87,6 +71,10 @@ export function ScenarioPage({ uploads, savedScenarios: initial, userId }: Props
       .select().single();
     if (data) setScenarios((prev) => [data as SavedScenario, ...prev]);
   }, [selectedUploadId, items, changes, userId]);
+
+  const handleDeleteScenario = useCallback((id: string) => {
+    setScenarios((prev) => prev.filter((s) => s.id !== id));
+  }, []);
 
   const handleLoad = useCallback(async (scenario: SavedScenario) => {
     if (scenario.upload_id !== selectedUploadId) {
@@ -141,7 +129,7 @@ export function ScenarioPage({ uploads, savedScenarios: initial, userId }: Props
 
       {scenarios.length > 0 && (
         <div className="mt-10">
-          <SavedScenariosList scenarios={scenarios} onLoad={handleLoad} />
+          <SavedScenariosList scenarios={scenarios} onLoad={handleLoad} onDelete={handleDeleteScenario} />
         </div>
       )}
     </div>

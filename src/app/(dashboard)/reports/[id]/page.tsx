@@ -8,6 +8,7 @@ import { CountryDonut } from "@/components/charts/country-donut";
 import { TopItemsBar } from "@/components/charts/top-items-bar";
 import { BomTable } from "@/components/dashboard/bom-table";
 import { SavingsRecommendations } from "@/components/dashboard/savings-recommendations";
+import { DeleteReportButton } from "@/components/dashboard/delete-report-button";
 
 export const metadata: Metadata = { title: "Report — TariffVerify" };
 
@@ -69,6 +70,7 @@ export default async function ReportPage(props: { params: Promise<{ id: string }
               Export PDF
             </button>
           )}
+          <DeleteReportButton uploadId={upload.id} />
           <Link href="/upload" className="rounded-lg bg-gray-950 px-3 py-1.5 text-xs font-medium text-white hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-950 dark:hover:bg-gray-200">
             New analysis
           </Link>
